@@ -104,8 +104,9 @@ module "central_vpcs" {
 
 # ---------- AWS NETWORK FIREWALL ----------
 module "network_firewall" {
-  source  = "aws-ia/networkfirewall/aws"
-  version = "1.0.1"
+  source = "github.com/rwalker777/terraform-aws-networkfirewall"
+  #source  = "aws-ia/networkfirewall/aws"
+  #version = "1.0.1"
   for_each = {
     for k, v in try(var.central_vpcs, {}) : k => v
     if contains(["inspection", "egress_with_inspection", "ingress_with_inspection"], v.type) && contains(keys(var.aws_network_firewall), k)
