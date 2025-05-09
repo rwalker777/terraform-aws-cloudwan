@@ -69,7 +69,7 @@ resource "aws_ram_principal_association" "principal_association" {
 # ---------- CENTRAL VPCS ----------
 module "central_vpcs" {
   source   = "aws-ia/vpc/aws"
-  version  = "4.4.1"
+  version  = "4.4.4"
   for_each = try(var.central_vpcs, {})
 
   name       = try(each.value.name, each.key)
@@ -105,7 +105,7 @@ module "central_vpcs" {
 # ---------- AWS NETWORK FIREWALL ----------
 module "network_firewall" {
   source  = "aws-ia/networkfirewall/aws"
-  version = "1.0.0"
+  version = "1.0.1"
   for_each = {
     for k, v in try(var.central_vpcs, {}) : k => v
     if contains(["inspection", "egress_with_inspection", "ingress_with_inspection"], v.type) && contains(keys(var.aws_network_firewall), k)
